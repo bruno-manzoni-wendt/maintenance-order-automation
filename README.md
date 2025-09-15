@@ -14,8 +14,8 @@
 ### File Watcher Script (watchdog.py)
 
 - Monitors Excel file for changes with timestamp tracking
-- When a new requests is made on Excel, a VBA script register it and saves the file.
-- When the modified timestammp changes, that will automatically trigger the 'service_order_processor.py' script
+- A VBA script register it and saves the file when a new requests is created on Excel
+- When the modified timestammp of the Excel file changes, that will automatically trigger the 'service_order_processor.py' script
 
 ###  Maintenance Request Processor (service_order_processor.py)
 
