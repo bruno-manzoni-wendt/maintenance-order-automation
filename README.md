@@ -1,64 +1,36 @@
 # Automated Maintenance Request Processing System
 
+**Situation:** Maintenance Service Orders were submitted manually on paper, making it difficult to track, monitor, and analyze requests.
+
+**Task:** Replace the manual process with a digital solution that enables traceability and monitoring.
+
+**Action:** Designed Excel-based forms integrated with Python automation, which register the requests and generated standardized Service Order documents automatically. These documents were sent to be printed in both the Manager’s and Maintenance offices.
+
+**Result:** Fully digitized the request process, reducing processing time and enabling monitoring and reporting of maintenance requests.
 
 
 ## How It Works - Step by Step
 
-### 1. **File Monitoring Phase** (Watchdog Script)
-- Script continuously monitors a specific Excel file (`maintenance_requests.xlsm`) for changes
-- Uses file modification timestamps to detect when the file has been updated
-- Runs in a loop every 20 seconds, checking if the file's last modified time has changed
-- Operates during business hours only (closes at 4:50 PM weekdays, 3:50 PM Fridays)
+### File Watcher Script (watchdog.py)
 
-### 2. **Change Detection & Trigger**
-- When the Excel file is modified (new maintenance request added):
-  - Updates the stored timestamp
-  - Automatically launches the maintenance request processor script
-  - Continues monitoring for additional changes
+- Monitors Excel file for changes with timestamp tracking
+- Automatically triggers document processing when a new requests is made on Excel
 
-### 3. **Data Processing Phase** (Processor Script)
-- Reads the Excel file and compares work order numbers
-- Identifies new requests by comparing the latest Excel entry with a tracking file
-- If no new requests exist, the script exits gracefully
+###  Maintenance Request Processor (process_requests.py)
 
-### 4. **Document Generation**
-For each new maintenance request:
-- **Load Template**: Opens a Word document template
-- **Extract Data**: Pulls request details (requester name, department, description, dates, etc.)
-- **Populate Document**: 
-  - Adds work order number to header
-  - Fills in requester information and service details
-  - Formats long descriptions with proper line wrapping
-- **Insert Signatures**: Automatically adds digital signature images for requester and supervisor
+- Reads maintenance requests from Excel spreadsheet
+- Generates formatted Word documents from template
+- Inserts digital signatures and request data automatically
+- Prints documents to multiple network printers
+- Sends authorization emails for improvement requests via Outlook
+- Tracks processed requests to avoid duplicates
+- Includes comprehensive error handling and logging
 
-### 5. **Document Output**
-- **Save**: Creates a new Word document with a unique filename
-- **Print**: Sends document to multiple network printers simultaneously
-  - Regular printers get all documents
-  - Color printer used sparingly (5% of time) to save costs
-- **Track**: Updates tracking file to prevent reprocessing the same request
+### Key Features:
 
-### 6. **Authorization Workflow** (For Improvement Requests)
-- If the request type is "IMPROVEMENT":
-  - Composes an authorization email with request details
-  - Sends via Outlook to managers for approval
-  - Uses GUI automation to complete the send process
-
-### 7. **Error Handling & Logging**
-- Captures and logs printing errors to a backlog file
-- Validates data completeness before processing
-- Handles COM interface connections safely
-- Provides user feedback throughout the process
-
-### 8. **Cleanup & Shutdown**
-- At end of business day, runs cleanup scripts
-- Closes all connections properly
-- Provides countdown notification before shutdown
-
-## Key Benefits
-- **Zero Manual Intervention**: Fully automated from detection to printing
-- **Real-time Processing**: Requests are processed within minutes of submission
-- **Multi-format Output**: Generates both digital and physical copies
-- **Approval Integration**: Automatically routes improvement requests for authorization
-- **Cost Optimization**: Smart printer selection reduces operational costs
-- **Error Recovery**: Comprehensive logging ensures no requests are lost
+- File monitoring with modification timestamp detection
+- Automated document generation using python-docx
+- Multi-printer support
+- Digital signature insertion from image files
+- Text formatting and wrapping for document templates
+- Excel data validation and processing
