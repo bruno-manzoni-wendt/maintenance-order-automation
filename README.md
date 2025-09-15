@@ -1,8 +1,6 @@
-# maintenance-order-automation
-Python automation system with Excel to register and generate Maintenance Service Order requests documents to be printed.
-
-
 # Automated Maintenance Request Processing System
+
+
 
 ## How It Works - Step by Step
 
