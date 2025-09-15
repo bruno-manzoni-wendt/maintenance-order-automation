@@ -9,14 +9,15 @@
 **Result:** Fully digitized the request process, reducing processing time and enabling monitoring and reporting of maintenance requests.
 
 
-## How It Works - Step by Step
+## How It Works
 
 ### File Watcher Script (watchdog.py)
 
 - Monitors Excel file for changes with timestamp tracking
-- Automatically triggers document processing when a new requests is made on Excel
+- When a new requests is made on Excel, a VBA script register it and saves the file.
+- When the modified timestammp changes, that will automatically trigger the 'service_order_processor.py' script
 
-###  Maintenance Request Processor (process_requests.py)
+###  Maintenance Request Processor (service_order_processor.py)
 
 - Reads maintenance requests from Excel spreadsheet
 - Generates formatted Word documents from template
